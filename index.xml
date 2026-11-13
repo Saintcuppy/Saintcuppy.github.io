@@ -9,10 +9,10 @@
 <link>https://your-website-url.example.com/</link>
 <atom:link href="https://your-website-url.example.com/index.xml" rel="self" type="application/rss+xml"/>
 <description>A blog about sports and data</description>
-<generator>quarto-1.9.38</generator>
-<lastBuildDate>Invalid Date</lastBuildDate>
+<generator>quarto-1.11.9</generator>
+<lastBuildDate>Fri, 13 Nov 2026 06:00:00 GMT</lastBuildDate>
 <item>
-  <title>CHANGE THIS TO BE THE TITLE OF YOUR POST</title>
+  <title>How bad was the Denver Broncos Offense from 2016-2024</title>
   <dc:creator>William Saint Cuppy</dc:creator>
   <link>https://your-website-url.example.com/posts/2015-2024-denver-broncos-suck/</link>
   <description><![CDATA[ 
@@ -21,27 +21,1098 @@
 
 
 
-<p>Hello. This is a test post.</p>
+<p>The Denver Broncos went from the highest of highs to quite possibly the lowest of lows almost immediately. Denver has been on a mediocre run since winning the Super Bowl in the 2015-2016 season. Just how bad are the Denver Broncos though, having missed the playoffs until 2024? Was it the offense or the defense that was lacking during their drought? Well their offense has been mediocre to say the least, at least in points production, being mediocre/towards the bottom every year. Well quarterback play did not help with having 14 total starting quarterbacks between 2015-2024. The last 10 years have been rough for Denver fans who watched the offense struggle to score and get in the endzone.&nbsp;</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">library</span>(tidyverse)</span></code></pre></div></div>
+font-style: inherit;">library</span>(tidyverse)</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(nflreadr)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(ggrepel)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(patchwork)</span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(dplyr)</span>
+<span id="cb1-6"></span>
+<span id="cb1-7">season15 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2015</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb1-8">season16 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2016</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb1-9">season17 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2017</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb1-10">season18 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2018</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb1-11">season19 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2019</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb1-12">season20 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2020</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb1-13">season21 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2021</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb1-14">season22 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2022</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb1-15">season23 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2023</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb1-16">season24 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2024</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb1-17"></span>
+<span id="cb1-18">nfl <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">bind_rows</span>(season15, season16, season17, season18, season19, season20, season21, season22, season23, season24)</span>
+<span id="cb1-19"></span>
+<span id="cb1-20">nfltds <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> nfl <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(</span>
+<span id="cb1-21">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">total_tds =</span> </span>
+<span id="cb1-22">    rushing_tds <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> passing_tds</span>
+<span id="cb1-23">) </span>
+<span id="cb1-24"></span>
+<span id="cb1-25">db <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> nfltds <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter</span>(team <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"DEN"</span>) </span>
+<span id="cb1-26"></span>
+<span id="cb1-27"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb1-28">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_line</span>(</span>
+<span id="cb1-29">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data=</span>nfltds, </span>
+<span id="cb1-30">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x=</span>season, </span>
+<span id="cb1-31">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y=</span>total_tds, </span>
+<span id="cb1-32">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">group=</span>team), </span>
+<span id="cb1-33">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lightgrey"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb1-34">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_line</span>(</span>
+<span id="cb1-35">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data=</span>db, </span>
+<span id="cb1-36">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x=</span>season, </span>
+<span id="cb1-37">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y=</span>total_tds, </span>
+<span id="cb1-38">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">group=</span>team), </span>
+<span id="cb1-39">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#FB4F14"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb1-40">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">labs</span>(</span>
+<span id="cb1-41">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Broncos total touchdowns are mediocre"</span>,</span>
+<span id="cb1-42">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">subtitle =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Denver's scoring ability has lacked after they won the Super Bowl."</span>,</span>
+<span id="cb1-43">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">caption =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Source: NFL | By William Saint Cuppy"</span>,</span>
+<span id="cb1-44">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Season"</span>,</span>
+<span id="cb1-45">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Total Touchdowns"</span></span>
+<span id="cb1-46">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb1-47">   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_x_continuous</span>(</span>
+<span id="cb1-48">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2015</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2024</span>),</span>
+<span id="cb1-49">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">limits =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2015.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2024.5</span>)</span>
+<span id="cb1-50">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb1-51"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_minimal</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb1-52">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme</span>(</span>
+<span id="cb1-53">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot.title =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">face =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>),</span>
+<span id="cb1-54">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">axis.title =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>), </span>
+<span id="cb1-55">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot.subtitle =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>), </span>
+<span id="cb1-56">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">panel.grid.minor =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_blank</span>(),</span>
+<span id="cb1-57">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot.title.position =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"plot"</span></span>
+<span id="cb1-58">  ) </span></code></pre></div></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.2.1     ✔ readr     2.2.0
-✔ forcats   1.0.1     ✔ stringr   1.6.0
-✔ ggplot2   4.0.3     ✔ tibble    3.3.1
-✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-✔ purrr     1.2.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://your-website-url.example.com/posts/2015-2024-denver-broncos-suck/index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
+</div>
+<p>Well just because Denver was bad at getting in the endzone doesn’t mean that they couldn’t move the ball though, right? Wrong, Denver was one of the worst teams in total yards from 2015-2024. Denver was bottom 5 in moving the ball being in front of the New York Giants, the Chicago Bears, and the New York Jets. They were one of the worst teams both in the air and on the ground. Denver’s overall offense lacked production, not only in getting in the endzone but also in moving the ball literally anywhere down the field. In not being able to move the ball on the ground nor through the air, hopefully they were able to at least take care of the ball right?</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(tidyverse)</span>
+<span id="cb2-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(nflreadr)</span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(ggrepel)</span>
+<span id="cb2-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(patchwork)</span>
+<span id="cb2-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(dplyr)</span>
+<span id="cb2-6"></span>
+<span id="cb2-7">season15 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2015</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb2-8">season16 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2016</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb2-9">season17 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2017</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb2-10">season18 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2018</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb2-11">season19 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2019</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb2-12">season20 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2020</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb2-13">season21 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2021</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb2-14">season22 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2022</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb2-15">season23 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2023</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb2-16">season24 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2024</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb2-17"></span>
+<span id="cb2-18">nfl <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">bind_rows</span>(season15, season16, season17, season18, season19, season20, season21, season22, season23, season24)</span>
+<span id="cb2-19"></span>
+<span id="cb2-20">nflyds <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> nfl <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">group_by</span>(team) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span id="cb2-21">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">summarize</span>(</span>
+<span id="cb2-22">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">total_rushing =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(rushing_yards), </span>
+<span id="cb2-23">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">total_passing =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(passing_yards)) </span>
+<span id="cb2-24"></span>
+<span id="cb2-25"></span>
+<span id="cb2-26">nfllong <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> nflyds <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span id="cb2-27">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pivot_longer</span>(</span>
+<span id="cb2-28">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">cols=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">starts_with</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"total"</span>), </span>
+<span id="cb2-29">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">names_to=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"type"</span>, </span>
+<span id="cb2-30">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">values_to=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"yards"</span>)</span>
+<span id="cb2-31"></span>
+<span id="cb2-32">db <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> nfllong <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter</span>(team <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"DEN"</span>)</span>
+<span id="cb2-33"></span>
+<span id="cb2-34"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> </span>
+<span id="cb2-35">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_bar</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data=</span>nfllong, </span>
+<span id="cb2-36">           <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">reorder</span>(team, yards),</span>
+<span id="cb2-37">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">weight=</span>yards,</span>
+<span id="cb2-38">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill=</span>type)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-39">   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_fill_manual</span>(</span>
+<span id="cb2-40">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">values =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"black"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"grey"</span>), </span>
+<span id="cb2-41">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">name=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Play Type"</span>, </span>
+<span id="cb2-42">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">labels =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Passing Yards"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Rushing Yards"</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-43">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_bar</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data=</span>db, </span>
+<span id="cb2-44">           <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x=</span>team,</span>
+<span id="cb2-45">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">weight=</span>yards,</span>
+<span id="cb2-46">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill=</span>type),<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#FB4F14"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-47">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coord_flip</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-48"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">labs</span>(</span>
+<span id="cb2-49">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Broncos one of the worst at moving the ball"</span>,</span>
+<span id="cb2-50">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">subtitle =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Denver's offensive production was one of the worst in the last 10 years. "</span>,</span>
+<span id="cb2-51">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">caption =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Source: NFL | By William Saint Cuppy"</span>,</span>
+<span id="cb2-52">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>,</span>
+<span id="cb2-53">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Total Yards"</span></span>
+<span id="cb2-54">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-55">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_minimal</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-56">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme</span>(</span>
+<span id="cb2-57">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot.title =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">face =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>),</span>
+<span id="cb2-58">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">axis.title =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>), </span>
+<span id="cb2-59">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot.subtitle =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>), </span>
+<span id="cb2-60">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">panel.grid.minor =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_blank</span>(),</span>
+<span id="cb2-61">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot.title.position =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"plot"</span></span>
+<span id="cb2-62">  )</span></code></pre></div></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://your-website-url.example.com/posts/2015-2024-denver-broncos-suck/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Wrong again, Denver was top 5 in total turnovers in the 10 years span between 2015-2024. There is some positive though, Denver’s defense was above average when it came to forcing turnovers, putting them in the top 15 in the NFL. Denver’s defense still couldn’t balance out the turnover margin though, with the offense coughing up the ball more than the majority of the NFL. Though the defense held their own and forced turnovers, the offense was so bad that the defense could not balance out the margin.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(tidyverse)</span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(nflreadr)</span>
+<span id="cb3-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(ggrepel)</span>
+<span id="cb3-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(patchwork)</span>
+<span id="cb3-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(dplyr)</span>
+<span id="cb3-6"></span>
+<span id="cb3-7">season15 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2015</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb3-8">season16 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2016</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb3-9">season17 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2017</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>) </span>
+<span id="cb3-10">season18 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2018</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>) </span>
+<span id="cb3-11">season19 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2019</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>) </span>
+<span id="cb3-12">season20 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2020</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb3-13">season21 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2021</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb3-14">season22 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2022</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb3-15">season23 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2023</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb3-16">season24 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">load_team_stats</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">seasons =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2024</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">summary_level =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"reg"</span>)</span>
+<span id="cb3-17"></span>
+<span id="cb3-18">nfl <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">bind_rows</span>(season15, season16, season17, season18, season19, season20, season21, season22, season23, season24)</span>
+<span id="cb3-19"></span>
+<span id="cb3-20">nflto <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> nfl <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">group_by</span>(team) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span id="cb3-21">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(</span>
+<span id="cb3-22">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">total_to =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(passing_interceptions) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(rushing_fumbles_lost) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(receiving_fumbles_lost),</span>
+<span id="cb3-23">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">def_to =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(def_interceptions) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(def_fumbles)</span>
+<span id="cb3-24">) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(</span>
+<span id="cb3-25">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">to_margin =</span> total_to <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> def_to</span>
+<span id="cb3-26">)</span>
+<span id="cb3-27"></span>
+<span id="cb3-28">db <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> nflto <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter</span>(team <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"DEN"</span>)</span>
+<span id="cb3-29"></span>
+<span id="cb3-30"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-31">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_point</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data=</span>nflto, </span>
+<span id="cb3-32">             <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(</span>
+<span id="cb3-33">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x=</span>total_to, </span>
+<span id="cb3-34">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y=</span>def_to,</span>
+<span id="cb3-35">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size=</span>to_margin), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lightgrey"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> </span>
+<span id="cb3-36"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_point</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data=</span>db, </span>
+<span id="cb3-37">             <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(</span>
+<span id="cb3-38">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x=</span>total_to, </span>
+<span id="cb3-39">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y=</span>def_to,</span>
+<span id="cb3-40">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size=</span>to_margin), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#FB4F14"</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-41">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">labs</span>(</span>
+<span id="cb3-42">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Broncos top 5 in turning the ball over"</span>,</span>
+<span id="cb3-43">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">subtitle =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Denver's turnover margin over the past 10 seasons is one of the worst in the NFL."</span>,</span>
+<span id="cb3-44">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">caption =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Source: NFL | By William Saint Cuppy"</span>,</span>
+<span id="cb3-45">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Offensive Turnovers"</span>,</span>
+<span id="cb3-46">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Defensive Turnovers"</span></span>
+<span id="cb3-47">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-48">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_minimal</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-49">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme</span>(</span>
+<span id="cb3-50">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot.title =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">face =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>),</span>
+<span id="cb3-51">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">axis.title =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>), </span>
+<span id="cb3-52">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot.subtitle =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_text</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>), </span>
+<span id="cb3-53">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">panel.grid.minor =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_blank</span>()</span>
+<span id="cb3-54">    ) </span></code></pre></div></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://your-website-url.example.com/posts/2015-2024-denver-broncos-suck/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The Denver Broncos quite literally went from the highest of highs in winning the Super Bowl, to the lowest of lows in having one of the worst offenses in the NFL and suffered a 10 year drought missing the playoffs. The defense stayed strong through those 10 years, but the offense could not produce any movement nor make their way into the endzone.</p>
 
 
 
@@ -50,7 +1121,7 @@ font-style: inherit;">library</span>(tidyverse)</span></code></pre></div></div>
   <category>terrible</category>
   <category>denver</category>
   <guid>https://your-website-url.example.com/posts/2015-2024-denver-broncos-suck/</guid>
-  <pubDate>Invalid Date</pubDate>
+  <pubDate>Fri, 13 Nov 2026 06:00:00 GMT</pubDate>
   <media:content url="https://your-website-url.example.com/posts/2015-2024-denver-broncos-suck/image.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -85,7 +1156,7 @@ font-style: inherit;">1</span></span></code></pre></div></div>
   <category>analysis</category>
   <guid>https://your-website-url.example.com/posts/post-with-code/</guid>
   <pubDate>Mon, 02 Nov 2026 06:00:00 GMT</pubDate>
-  <media:content url="https://your-website-url.example.com/posts/post-with-code/image.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://your-website-url.example.com/posts/post-with-code/image.jpg" medium="image" type="image/jpeg" height="96" width="144"/>
 </item>
 <item>
   <title>Welcome To My Blog</title>
