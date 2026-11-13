@@ -1122,7 +1122,7 @@ font-style: inherit;">element_blank</span>()</span>
   <category>denver</category>
   <guid>https://your-website-url.example.com/posts/2015-2024-denver-broncos-suck/</guid>
   <pubDate>Fri, 13 Nov 2026 06:00:00 GMT</pubDate>
-  <media:content url="https://your-website-url.example.com/posts/2015-2024-denver-broncos-suck/image.png" medium="image" type="image/png"/>
+  <media:content url="https://your-website-url.example.com/posts/2015-2024-denver-broncos-suck/image.png" medium="image" type="image/png" height="103" width="144"/>
 </item>
 <item>
   <title>Post With Code</title>
